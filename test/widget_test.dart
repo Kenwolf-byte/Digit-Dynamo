@@ -1,30 +1,146 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:calculator/pages/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:calculator/main.dart';
-
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const SplashScreen());
+  testWidgets('Calculator performs addition correctly',
+      (WidgetTester tester) async {
+    //=== Build the widget
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MyHomePage(),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    //=== Verify initial state
+    expect(find.text('0.00'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    //=== Tap the button '1'
+    await tester.tap(find.text('1'));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    //=== Verify display updates to '1'
+    expect(find.text('1.00'), findsOneWidget);
+
+    //=== Tap the button '+'
+    await tester.tap(find.text('+'));
+    await tester.pump();
+
+    //=== Tap the button '2'
+    await tester.tap(find.text('2'));
+    await tester.pump();
+
+    //=== Verify display updates to '2'
+    expect(find.text('2.00'), findsOneWidget);
+
+    //=== Tap the '=' button
+    await tester.tap(find.text('='));
+    await tester.pump();
+
+    //=== Verify the result is '3.00'
+    expect(find.text('3.00'), findsOneWidget);
+  });
+
+  testWidgets('Calculator performs subtraction correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MyHomePage(),
+      ),
+    );
+
+    //=== Tap the button '5'
+    await tester.tap(find.text('5'));
+    await tester.pump();
+
+    //=== Tap the button '-'
+    await tester.tap(find.text('-'));
+    await tester.pump();
+
+    //=== Tap the button '3'
+    await tester.tap(find.text('3'));
+    await tester.pump();
+
+    //=== Tap the '=' button
+    await tester.tap(find.text('='));
+    await tester.pump();
+
+    //=== Verify the result is '2.00'
+    expect(find.text('2.00'), findsOneWidget);
+  });
+
+  testWidgets('Calculator performs multiplication correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MyHomePage(),
+      ),
+    );
+
+    //=== Tap the button '3'
+    await tester.tap(find.text('3'));
+    await tester.pump();
+
+    //=== Tap the button 'X'
+    await tester.tap(find.text('X'));
+    await tester.pump();
+
+    //=== Tap the button '4'
+    await tester.tap(find.text('4'));
+    await tester.pump();
+
+    //=== Tap the '=' button
+    await tester.tap(find.text('='));
+    await tester.pump();
+
+    //=== Verify the result is '12.00'
+    expect(find.text('12.00'), findsOneWidget);
+  });
+
+  testWidgets('Calculator performs division correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MyHomePage(),
+      ),
+    );
+
+    //=== Tap the button '8'
+    await tester.tap(find.text('8'));
+    await tester.pump();
+
+    //=== Tap the button '/'
+    await tester.tap(find.text('/'));
+    await tester.pump();
+
+    //=== Tap the button '2'
+    await tester.tap(find.text('2'));
+    await tester.pump();
+
+    //=== Tap the '=' button
+    await tester.tap(find.text('='));
+    await tester.pump();
+
+    //=== Verify the result is '4.00'
+    expect(find.text('4.00'), findsOneWidget);
+  });
+
+  testWidgets('Calculator clears input correctly', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MyHomePage(),
+      ),
+    );
+
+    //=== Tap the button '8'
+    await tester.tap(find.text('8'));
+    await tester.pump();
+
+    //=== Tap the button 'CLEAR'
+    await tester.tap(find.text('CLEAR'));
+    await tester.pump();
+
+    //=== Verify the result is '0.00'
+    expect(find.text('0.00'), findsOneWidget);
   });
 }
