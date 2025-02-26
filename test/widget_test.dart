@@ -8,7 +8,9 @@ void main() {
     //=== Build the widget
     await tester.pumpWidget(
       const MaterialApp(
-        home: MyHomePage(),
+        home: MyHomePage(
+          title: '',
+        ),
       ),
     );
 
@@ -45,7 +47,9 @@ void main() {
       (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: MyHomePage(),
+        home: MyHomePage(
+          title: '',
+        ),
       ),
     );
 
@@ -73,7 +77,9 @@ void main() {
       (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: MyHomePage(),
+        home: MyHomePage(
+          title: '',
+        ),
       ),
     );
 
@@ -101,7 +107,9 @@ void main() {
       (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: MyHomePage(),
+        home: MyHomePage(
+          title: '',
+        ),
       ),
     );
 
@@ -128,7 +136,9 @@ void main() {
   testWidgets('Calculator clears input correctly', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: MyHomePage(),
+        home: MyHomePage(
+          title: '',
+        ),
       ),
     );
 

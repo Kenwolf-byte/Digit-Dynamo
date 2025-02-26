@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\Projects\Flutter Projects\Digit-Dynamo\build\windows\x64\CMakeFiles\56dc96578b2c98d0f416e4588a2f6258\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{DA9C2DC5-F4CB-354C-856E-AE080956B4D6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

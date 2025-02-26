@@ -1,0 +1,28 @@
+^D:\PROJECTS\FLUTTER PROJECTS\DIGIT-DYNAMO\BUILD\WINDOWS\X64\CMAKEFILES\46E3FDD4DA7942DE97E445C09D6B09A1\FLUTTER_WINDOWS.DLL.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env FLUTTER_ROOT=C:\flutter "PROJECT_DIR=D:\Projects\Flutter Projects\Digit-Dynamo" FLUTTER_ROOT=C:\flutter "FLUTTER_EPHEMERAL_DIR=D:\Projects\Flutter Projects\Digit-Dynamo\windows\flutter\ephemeral" "PROJECT_DIR=D:\Projects\Flutter Projects\Digit-Dynamo" "FLUTTER_TARGET=D:\Projects\Flutter Projects\Digit-Dynamo\lib\main.dart" DART_OBFUSCATION=false TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=false "PACKAGE_CONFIG=D:\Projects\Flutter Projects\Digit-Dynamo\.dart_tool\package_config.json" C:/flutter/packages/flutter_tools/bin/tool_backend.bat windows-x64 Debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^D:\PROJECTS\FLUTTER PROJECTS\DIGIT-DYNAMO\BUILD\WINDOWS\X64\CMAKEFILES\7BF90B57DEB43C567E4430971216F1E8\FLUTTER_ASSEMBLE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^D:\PROJECTS\FLUTTER PROJECTS\DIGIT-DYNAMO\WINDOWS\FLUTTER\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SD:/Projects/Flutter Projects/Digit-Dynamo/windows" "-BD:/Projects/Flutter Projects/Digit-Dynamo/build/windows/x64" --check-stamp-file "D:/Projects/Flutter Projects/Digit-Dynamo/build/windows/x64/flutter/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

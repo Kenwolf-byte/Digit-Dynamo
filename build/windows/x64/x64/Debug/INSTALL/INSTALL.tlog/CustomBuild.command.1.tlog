@@ -1,0 +1,10 @@
+^D:\PROJECTS\FLUTTER PROJECTS\DIGIT-DYNAMO\BUILD\WINDOWS\X64\CMAKEFILES\56DC96578B2C98D0F416E4588A2F6258\INSTALL_FORCE.RULE
+setlocal
+cd .
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
