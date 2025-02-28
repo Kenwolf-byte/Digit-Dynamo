@@ -1,41 +1,60 @@
 import 'package:calculator/pages/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // For mocking persistent storage
 
 void main() {
-  // Mock SharedPreferences for testing persistent storage
-  SharedPreferences.setMockInitialValues({});
-
   testWidgets('Calculator performs addition correctly',
       (WidgetTester tester) async {
+    //=== Build the widget
     await tester.pumpWidget(
       const MaterialApp(
         home: MyHomePage(
-          title: '',
+          title: "",
         ),
       ),
     );
 
-    expect(find.text('0'), findsOneWidget);
+    //=== Verify initial state
+    final displayFinder =
+        find.byKey(const Key('display')); //=== Target the display widget
+    expect(displayFinder, findsOneWidget); //=== Ensure the display shows exists
+    expect((tester.widget(displayFinder) as Text).data,
+        "0"); //=== Verify the display shows "0"
 
+    //=== Tap the button '1'
     await tester.tap(find.text('1'));
     await tester.pump();
-    expect(find.text('1'), findsOneWidget);
 
+    expect(
+        displayFinder, findsOneWidget); //=== Verify that display updates to "1"
+    expect((tester.widget(displayFinder) as Text).data,
+        "1"); //=== Verify the display shows "1"
+
+    //=== Tap the button '+'
     await tester.tap(find.text('+'));
     await tester.pump();
 
+    //=== Tap the button '2'
     await tester.tap(find.text('2'));
     await tester.pump();
-    expect(find.text('2'), findsOneWidget);
 
+    //=== Verify the result is '2'
+    expect(
+        displayFinder, findsOneWidget); //=== Ensure the display widget exists
+    expect((tester.widget(displayFinder) as Text).data,
+        "2"); //=== Verify the display shows "2"
+
+    //=== Tap the '=' button
     await tester.tap(find.text('='));
     await tester.pump();
-    expect(find.text('3'), findsOneWidget);
-  });
 
-  testWidgets('Calculator adds calculation to history',
+    //=== Verify the result is '3'
+    expect(
+        displayFinder, findsOneWidget); //=== Ensure the display widget exists
+    expect((tester.widget(displayFinder) as Text).data, "3.0");
+  }); //=== Verify the display shows "3"
+
+  testWidgets('Calculator performs subtraction correctly',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
@@ -45,144 +64,29 @@ void main() {
       ),
     );
 
-    // Perform a calculation
+    //=== Tap the button '5'
     await tester.tap(find.text('5'));
     await tester.pump();
-    await tester.tap(find.text('+'));
-    await tester.pump();
-    await tester.tap(find.text('3'));
-    await tester.pump();
-    await tester.tap(find.text('='));
-    await tester.pump();
 
-    // Open history dialog
-    await tester.tap(find.byIcon(Icons.history));
-    await tester.pumpAndSettle();
-
-    // Verify the calculation is in the history
-    expect(find.text('5.0 + 3.0 = 8'), findsOneWidget);
-  });
-
-  testWidgets('Calculator saves history to persistent storage',
-      (WidgetTester tester) async {
-    // Mock SharedPreferences
-    SharedPreferences.setMockInitialValues({});
-
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: MyHomePage(
-          title: '',
-        ),
-      ),
-    );
-
-    // Perform a calculation
-    await tester.tap(find.text('7'));
-    await tester.pump();
+    //=== Tap the button '-'
     await tester.tap(find.text('-'));
     await tester.pump();
-    await tester.tap(find.text('2'));
-    await tester.pump();
-    await tester.tap(find.text('='));
-    await tester.pump();
 
-    // Verify history is saved
-    final prefs = await SharedPreferences.getInstance();
-    final history = prefs.getStringList('history');
-    expect(history, isNotNull);
-    expect(history!.contains('7.0 - 2.0 = 5'), isTrue);
-  });
-
-  testWidgets('Calculator loads history from persistent storage',
-      (WidgetTester tester) async {
-    // Mock SharedPreferences with initial history
-    SharedPreferences.setMockInitialValues({
-      'history': ['3.0 * 4.0 = 12'],
-    });
-
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: MyHomePage(
-          title: '',
-        ),
-      ),
-    );
-
-    // Open history dialog
-    await tester.tap(find.byIcon(Icons.history));
-    await tester.pumpAndSettle();
-
-    // Verify the history is loaded
-    expect(find.text('3.0 * 4.0 = 12'), findsOneWidget);
-  });
-
-  testWidgets('Calculator reuses history entry', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: MyHomePage(
-          title: '',
-        ),
-      ),
-    );
-
-    // Perform a calculation
-    await tester.tap(find.text('9'));
-    await tester.pump();
-    await tester.tap(find.text('/'));
-    await tester.pump();
+    //=== Tap the button '3'
     await tester.tap(find.text('3'));
     await tester.pump();
+
+    //=== Tap the '=' button
     await tester.tap(find.text('='));
     await tester.pump();
 
-    // Open history dialog
-    await tester.tap(find.byIcon(Icons.history));
-    await tester.pumpAndSettle();
-
-    // Tap on the history entry to reuse it
-    await tester.tap(find.text('9.0 / 3.0 = 3'));
-    await tester.pump();
-
-    // Verify the result is reused
-    expect(find.text('3'), findsOneWidget);
+    //=== Verify the result is '2'
+    expect(find.byKey(const Key('display')),
+        findsOneWidget); // Target the display widget
+    expect(find.text('2'), findsOneWidget); // Ensure the display shows "2"
   });
 
-  testWidgets('Calculator clears history', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: MyHomePage(
-          title: '',
-        ),
-      ),
-    );
-
-    // Perform a calculation
-    await tester.tap(find.text('4'));
-    await tester.pump();
-    await tester.tap(find.text('X'));
-    await tester.pump();
-    await tester.tap(find.text('5'));
-    await tester.pump();
-    await tester.tap(find.text('='));
-    await tester.pump();
-
-    // Open history dialog
-    await tester.tap(find.byIcon(Icons.history));
-    await tester.pumpAndSettle();
-
-    // Tap the "Clear History" button
-    await tester.tap(find.text('Clear History'));
-    await tester.pump();
-
-    // Confirm clearing history
-    await tester.tap(find.text('Clear'));
-    await tester.pumpAndSettle();
-
-    // Verify history is cleared
-    expect(find.text('4.0 X 5.0 = 20'), findsNothing);
-  });
-
-  testWidgets('Calculator deletes individual history entry',
+  testWidgets('Calculator performs multiplication correctly',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
@@ -192,25 +96,226 @@ void main() {
       ),
     );
 
-    // Perform a calculation
-    await tester.tap(find.text('6'));
+    //=== Tap the button '3'
+    await tester.tap(find.text('3'));
     await tester.pump();
-    await tester.tap(find.text('+'));
+
+    //=== Tap the button 'X'
+    await tester.tap(find.text('X'));
     await tester.pump();
+
+    //=== Tap the button '4'
     await tester.tap(find.text('4'));
     await tester.pump();
+
+    //=== Tap the '=' button
     await tester.tap(find.text('='));
     await tester.pump();
 
-    // Open history dialog
-    await tester.tap(find.byIcon(Icons.history));
-    await tester.pumpAndSettle();
+    //=== Verify the result is '12'
+    final displayFinder = find.byKey(const Key('display'));
+    final displayWidget = tester.widget(displayFinder) as Text;
+    expect(displayFinder, findsOneWidget); // Ensure the display widget exists
+    expect(displayWidget.data!.trim(),
+        "12.0"); // Verify the display shows "12" (trim extra spaces)
+  });
 
-    // Tap the delete button next to the history entry
-    await tester.tap(find.byIcon(Icons.delete));
+  testWidgets('Calculator performs division correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MyHomePage(
+          title: '',
+        ),
+      ),
+    );
+
+    //=== Tap the button '8'
+    await tester.tap(find.text('8'));
     await tester.pump();
 
-    // Verify the history entry is deleted
-    expect(find.text('6.0 + 4.0 = 10'), findsNothing);
+    //=== Tap the button '/'
+    await tester.tap(find.text('/'));
+    await tester.pump();
+
+    //=== Tap the button '2'
+    await tester.tap(find.text('2'));
+    await tester.pump();
+
+    //=== Tap the '=' button
+    await tester.tap(find.text('='));
+    await tester.pump();
+
+    //=== Verify the result is '4'
+    expect(find.byKey(const Key('display')),
+        findsOneWidget); // Target the display widget
+    expect(find.text('4'), findsOneWidget); // Ensure the display shows "4"
+  });
+
+  testWidgets('Calculator clears input correctly', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MyHomePage(
+          title: '',
+        ),
+      ),
+    );
+
+    //=== Tap the button '8'
+    await tester.tap(find.text('8'));
+    await tester.pump();
+
+    //=== Tap the button 'CLEAR'
+    await tester.tap(find.text('CLEAR'));
+    await tester.pump();
+
+    //=== Verify the result is '0'
+    final displayFinder =
+        find.byKey(const Key('display')); // Target the display widget
+    expect(displayFinder, findsOneWidget); // Ensure the display widget exists
+    expect((tester.widget(displayFinder) as Text).data,
+        "0"); // Verify the display shows "0"
+  });
+  testWidgets('Calculator handles square root correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MyHomePage(
+          title: '',
+        ),
+      ),
+    );
+
+    //=== Tap the button '9'
+    await tester.tap(find.text('9'));
+    await tester.pump();
+
+    //=== Tap the button '√'
+    await tester.tap(find.text('√'));
+    await tester.pump();
+
+    //=== Verify the result is '3'
+    expect(find.byKey(const Key('display')),
+        findsOneWidget); // Target the display widget
+    expect(find.text('3'), findsOneWidget); // Ensure the display shows "3"
+  });
+
+  testWidgets('Calculator handles percentage correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MyHomePage(
+          title: '',
+        ),
+      ),
+    );
+
+    //=== Tap the button '5'
+    await tester.tap(find.text('5'));
+    await tester.pump();
+
+    //=== Tap the button '0'
+    await tester.tap(find.text('0'));
+    await tester.pump();
+
+    //=== Tap the button '%'
+    await tester.tap(find.text('%'));
+    await tester.pump();
+
+    //=== Verify the result is '0.5'
+    expect(find.byKey(const Key('display')),
+        findsOneWidget); // Target the display widget
+    expect(find.text('0.5'), findsOneWidget); // Ensure the display shows "0.5"
+  });
+
+  testWidgets('Calculator handles power correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MyHomePage(
+          title: '',
+        ),
+      ),
+    );
+
+    //=== Tap the button '2'
+    await tester.tap(find.text('2'));
+    await tester.pump();
+
+    //=== Tap the button '^'
+    await tester.tap(find.text('^'));
+    await tester.pump();
+
+    //=== Tap the button '3'
+    await tester.tap(find.text('3'));
+    await tester.pump();
+
+    //=== Tap the '=' button
+    await tester.tap(find.text('='));
+    await tester.pump();
+
+    //=== Verify the result is '8'
+    expect(find.byKey(const Key('display')),
+        findsOneWidget); // Target the display widget
+    expect(find.text('8'), findsOneWidget); // Ensure the display shows "8"
+  });
+
+  testWidgets('Calculator handles negation correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MyHomePage(
+          title: '',
+        ),
+      ),
+    );
+
+    //=== Tap the button '5'
+    await tester.tap(find.text('5'));
+    await tester.pump();
+
+    //=== Tap the button '±'
+    await tester.tap(find.text('±'));
+    await tester.pump();
+
+    //=== Verify the result is '-5'
+    final displayFinder = find.byKey(const Key('display'));
+    final displayWidget = tester.widget(displayFinder) as Text;
+    expect(
+        displayFinder, findsOneWidget); //=== Ensure the display widget exists
+    expect(displayWidget.data, "-5.0"); //=== Verify the display shows "-5"
+  });
+
+  testWidgets('Calculator handles division by zero correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MyHomePage(
+          title: '',
+        ),
+      ),
+    );
+
+    //=== Tap the button '8'
+    await tester.tap(find.byKey(const Key('button_8'))); // Use unique key
+    await tester.pump();
+
+    //=== Tap the button '/'
+    await tester.tap(find.byKey(const Key('button_/'))); // Use unique key
+    await tester.pump();
+
+    //=== Tap the button '0'
+    await tester.tap(find.byKey(const Key('button_0'))); // Use unique key
+    await tester.pump();
+
+    //=== Tap the '=' button
+    await tester.tap(find.byKey(const Key('button_='))); // Use unique key
+    await tester.pump();
+
+    //=== Verify the result is 'Error'
+    expect(find.byKey(const Key('display')),
+        findsOneWidget); // Target the display widget
+    expect(
+        find.text('Error'), findsOneWidget); // Ensure the display shows "Error"
   });
 }

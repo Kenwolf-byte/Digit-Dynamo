@@ -16,15 +16,15 @@ class _MyHomePageState extends State<MyHomePage> {
   double num1 = 0.0;
   double num2 = 0.0;
   String operand = "";
-  List<String> history = []; // List to store calculation history
+  List<String> history = []; //=== List to store calculation history
 
   @override
   void initState() {
     super.initState();
-    _loadHistory(); // Load history from persistent storage when the app starts
+    _loadHistory(); //=== Load history from persistent storage when the app starts
   }
 
-  // Load history from SharedPreferences
+  //=== Load history from SharedPreferences
   void _loadHistory() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  // Save history to SharedPreferences
+  //=== Save history to SharedPreferences
   void _saveHistory() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList("history", history);
@@ -44,6 +44,14 @@ class _MyHomePageState extends State<MyHomePage> {
       num1 = 0.0;
       num2 = 0.0;
       operand = "";
+    } else if (buttonText == "⌫") {
+      // Backspace button
+      if (_output.isNotEmpty && _output != "0") {
+        _output = _output.substring(0, _output.length - 1);
+        if (_output.isEmpty) {
+          _output = "0"; //=== Reset to "0" if all digits are deleted
+        }
+      }
     } else if (buttonText == "+" ||
         buttonText == "-" ||
         buttonText == "/" ||
@@ -65,17 +73,22 @@ class _MyHomePageState extends State<MyHomePage> {
     } else if (buttonText == "±") {
       double num = double.parse(output);
       _output = (num * -1).toString();
-    } else if (buttonText == ".") {
-      if (_output.contains(".")) {
-        return;
-      } else {
-        _output = _output + buttonText;
+    } else if (buttonText == "±") {
+      try {
+        double num = double.parse(_output);
+        _output = (num * -1).toString();
+        // Remove ".0" if the number is an integer
+        if (_output.endsWith('.0')) {
+          _output = _output.substring(0, _output.length - 2);
+        }
+      } catch (e) {
+        _output = "Error"; // Handle parsing errors
       }
     } else if (buttonText == "=") {
       num2 = double.parse(output);
 
       String calculation =
-          "$num1 $operand $num2 = "; // Create the calculation string
+          "$num1 $operand $num2 = "; //=== Create the calculation string
 
       if (operand == "+") {
         _output = (num1 + num2).toString();
@@ -95,15 +108,17 @@ class _MyHomePageState extends State<MyHomePage> {
       }
       if (operand == "^") {
         if (num1 == 0 && num2 == 0) {
-          _output = "Error"; // or "1" if you choose to define 0^0 = 1
+          _output = "Error"; //=== or "1" if you choose to define 0^0 = 1
         } else {
           _output = (pow(num1, num2)).toString();
         }
       }
 
-      calculation += _output; // Append the result to the calculation string
-      history.add(calculation); // Add the calculation to the history list
-      _saveHistory(); // Save the updated history to persistent storage
+      calculation += _output; //=== Append the result to the calculation string
+      debugPrint(
+          "Calculation: $calculation"); //=== Debugging: Print the calculation string
+      history.add(calculation); //=== Add the calculation to the history list
+      _saveHistory(); //=== Save the updated history to persistent storage
 
       num1 = 0.0;
       num2 = 0.0;
@@ -124,28 +139,66 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void deleteHistoryEntry(int index) {
-    setState(() {
-      history.removeAt(index); // Remove the selected history entry
-      _saveHistory(); // Save the updated history to persistent storage
-    });
+  void deleteHistoryEntry(int index, StateSetter setDialogState) {
+    // Show confirmation dialog before deleting
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Delete Entry"),
+          content: const Text("Are you sure you want to delete this entry?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the confirmation dialog
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                if (index >= 0 && index < history.length) {
+                  setState(() {
+                    history
+                        .removeAt(index); // Remove the selected history entry
+                    _saveHistory(); // Save the updated history to persistent storage
+                  });
+                  setDialogState(() {}); // Rebuild the dialog
+                }
+                Navigator.pop(context); // Close the confirmation dialog
+              },
+              child: const Text("Delete"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void reuseCalculation(String calculation) {
-    // Extract the result from the calculation string
-    String result = calculation.split("=").last.trim();
-    setState(() {
-      output = result;
-      _output = result;
-    });
-    Navigator.pop(context); // Close the history dialog
+    //=== Check if the calculation string contains the '=' character
+    if (calculation.contains("=")) {
+      //=== Extract the result from the calculation string
+      String result = calculation.split("=").last.trim();
+      setState(() {
+        output = result;
+        _output = result;
+      });
+      Navigator.pop(context); //=== Close the history dialog
+    } else {
+      //=== Handle invalid calculation string
+      setState(() {
+        output = "Error";
+        _output = "Error";
+      });
+    }
   }
 
   Widget buildButton(String buttonText) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(5.0),
         child: ElevatedButton(
+          key: Key('button_$buttonText'), //=== Add a unique key
           style: ElevatedButton.styleFrom(
             backgroundColor: _getButtonColor(buttonText),
             shape: RoundedRectangleBorder(
@@ -181,6 +234,8 @@ class _MyHomePageState extends State<MyHomePage> {
         buttonText == "%" ||
         buttonText == "±") {
       return Colors.orange;
+    } else if (buttonText == "⌫") {
+      return Colors.grey; //=== Backspace button color
     } else {
       return Colors.blue;
     }
@@ -188,81 +243,103 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // String Size = "MediaQuery.of(context).size";
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title!),
+        title: Text(widget.title!,
+            style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.deepPurple,
         actions: [
           IconButton(
+            color: Colors.white,
             icon: const Icon(Icons.history),
             onPressed: () {
-              // Show history in a dialog
+              //=== Show history in a dialog
               showDialog(
                 context: context,
                 builder: (context) {
-                  return AlertDialog(
-                    title: const Text("Calculation History"),
-                    content: SizedBox(
-                      width: double.maxFinite,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: history.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(history[index]),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () =>
-                                  deleteHistoryEntry(index), // Delete entry
-                            ),
-                            onTap: () => reuseCalculation(
-                                history[index]), // Reuse calculation
-                          );
-                        },
-                      ),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          // Show confirmation dialog before clearing history
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: const Text("Clear History"),
-                                content: const Text(
-                                    "Hey!, Edwin says, Are you sure you want to clear all history?"),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(
-                                          context); // Close the confirmation dialog
-                                    },
-                                    child: const Text("Cancel"),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      clearHistory(); // Clear history
-                                      Navigator.pop(
-                                          context); // Close the confirmation dialog
-                                      Navigator.pop(
-                                          context); // Close the history dialog
-                                    },
-                                    child: const Text("Clear"),
-                                  ),
-                                ],
+                  return StatefulBuilder(
+                    builder: (context, setDialogState) {
+                      return AlertDialog(
+                        title: const Text("Calculation History"),
+                        content: SizedBox(
+                          width: double.maxFinite,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: history.length,
+                            itemBuilder: (context, index) {
+                              String calculation = history[index];
+                              return ListTile(
+                                title: Text(calculation),
+                                trailing: IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () => deleteHistoryEntry(
+                                      index, setDialogState), //=== Delete entry
+                                ),
+                                onTap: () {
+                                  if (calculation.contains("=")) {
+                                    reuseCalculation(
+                                        calculation); //=== Reuse calculation
+                                  } else {
+                                    setState(() {
+                                      output = "Error";
+                                      _output = "Error";
+                                    });
+                                  }
+                                },
                               );
                             },
-                          );
-                        },
-                        child: const Text("Clear History"),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text("Close"),
-                      ),
-                    ],
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              //=== Show confirmation dialog before clearing history
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text("Clear History"),
+                                    content: const Text(
+                                        "Hey!, Edwin says, Are you sure you want to clear all history?"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(
+                                              context); //=== Close the confirmation dialog
+                                        },
+                                        child: const Text("Cancel"),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          clearHistory(); //=== Clear history
+                                          setDialogState(
+                                              () {}); //=== Rebuild the dialog
+                                          Navigator.pop(
+                                              context); //=== Close the confirmation dialog
+                                          Navigator.pop(
+                                              context); //=== Close the history dialog
+                                        },
+                                        child: const Text("Clear"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: const Text("Clear History"),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text("Close"),
+                          ),
+                        ],
+                      );
+                    },
                   );
                 },
               );
@@ -280,6 +357,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         child: Column(
           children: <Widget>[
+            //=== Display Section
             Expanded(
               child: Container(
                 alignment: Alignment.bottomRight,
@@ -294,6 +372,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       output,
+                      key: const Key('display'), // Add a unique key
                       style: const TextStyle(
                         fontSize: 48.0,
                         fontWeight: FontWeight.bold,
@@ -305,53 +384,70 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             const Divider(height: 1.0, color: Colors.white),
+
+            //=== Buttons Section
             Expanded(
-              flex: 2,
+              flex: 2, //=== Give more space to the buttons
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        buildButton("7"),
-                        buildButton("8"),
-                        buildButton("9"),
-                        buildButton("/"),
-                        buildButton("√"),
-                      ],
+                    //=== Row 1
+                    Expanded(
+                      child: Row(
+                        children: [
+                          buildButton("7"),
+                          buildButton("8"),
+                          buildButton("9"),
+                          buildButton("/"),
+                          buildButton("√"),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        buildButton("4"),
-                        buildButton("5"),
-                        buildButton("6"),
-                        buildButton("X"),
-                        buildButton("%"),
-                      ],
+                    //=== Row 2
+                    Expanded(
+                      child: Row(
+                        children: [
+                          buildButton("4"),
+                          buildButton("5"),
+                          buildButton("6"),
+                          buildButton("X"),
+                          buildButton("%"),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        buildButton("1"),
-                        buildButton("2"),
-                        buildButton("3"),
-                        buildButton("-"),
-                        buildButton("^"),
-                      ],
+                    //=== Row 3
+                    Expanded(
+                      child: Row(
+                        children: [
+                          buildButton("1"),
+                          buildButton("2"),
+                          buildButton("3"),
+                          buildButton("-"),
+                          buildButton("^"),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        buildButton("."),
-                        buildButton("0"),
-                        buildButton("00"),
-                        buildButton("+"),
-                        buildButton("±"),
-                      ],
+                    //=== Row 4
+                    Expanded(
+                      child: Row(
+                        children: [
+                          buildButton("."),
+                          buildButton("0"),
+                          buildButton("⌫"), // Backspace button
+                          buildButton("+"),
+                          buildButton("±"),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        buildButton("CLEAR"),
-                        buildButton("="),
-                      ],
+                    //=== Row 5
+                    Expanded(
+                      child: Row(
+                        children: [
+                          buildButton("CLEAR"),
+                          buildButton("="),
+                        ],
+                      ),
                     ),
                   ],
                 ),

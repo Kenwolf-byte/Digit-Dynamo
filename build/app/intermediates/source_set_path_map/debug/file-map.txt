@@ -1,0 +1,44 @@
+com.example.calculator.app-jetified-appcompat-resources-1.1.0-0 C:\Users\kenwo\.gradle\caches\transforms-3\060bdc0cd25425fe5564742de39b66f5\transformed\jetified-appcompat-resources-1.1.0\res
+com.example.calculator.app-jetified-annotation-experimental-1.4.0-1 C:\Users\kenwo\.gradle\caches\transforms-3\1a7e968754612c8386d09b8a400a656b\transformed\jetified-annotation-experimental-1.4.0\res
+com.example.calculator.app-recyclerview-1.0.0-2 C:\Users\kenwo\.gradle\caches\transforms-3\25dca016e77113dc7287dab564c8c267\transformed\recyclerview-1.0.0\res
+com.example.calculator.app-core-1.13.1-3 C:\Users\kenwo\.gradle\caches\transforms-3\26c394bc9a2154489bf45142347f1120\transformed\core-1.13.1\res
+com.example.calculator.app-jetified-startup-runtime-1.1.1-4 C:\Users\kenwo\.gradle\caches\transforms-3\28dd56bfed7b2ceb426f94df256eb824\transformed\jetified-startup-runtime-1.1.1\res
+com.example.calculator.app-jetified-window-java-1.2.0-5 C:\Users\kenwo\.gradle\caches\transforms-3\29be26ae3f9e430989958dbd9819fb8f\transformed\jetified-window-java-1.2.0\res
+com.example.calculator.app-lifecycle-livedata-2.7.0-6 C:\Users\kenwo\.gradle\caches\transforms-3\2d03d7ac4663b3bcad5cc0bb653c5682\transformed\lifecycle-livedata-2.7.0\res
+com.example.calculator.app-lifecycle-viewmodel-2.7.0-7 C:\Users\kenwo\.gradle\caches\transforms-3\2ec48b8fa72383672ca5f4c2d7fc6822\transformed\lifecycle-viewmodel-2.7.0\res
+com.example.calculator.app-jetified-lifecycle-process-2.7.0-8 C:\Users\kenwo\.gradle\caches\transforms-3\3d054b17c0543b78f34c4b62204c1341\transformed\jetified-lifecycle-process-2.7.0\res
+com.example.calculator.app-jetified-activity-ktx-1.8.1-9 C:\Users\kenwo\.gradle\caches\transforms-3\3f0eae8af915d036a3906df3970e769a\transformed\jetified-activity-ktx-1.8.1\res
+com.example.calculator.app-jetified-lifecycle-viewmodel-ktx-2.7.0-10 C:\Users\kenwo\.gradle\caches\transforms-3\41a0e5226a6a3b0e9e5543a9a7193cbc\transformed\jetified-lifecycle-viewmodel-ktx-2.7.0\res
+com.example.calculator.app-jetified-datastore-preferences-release-11 C:\Users\kenwo\.gradle\caches\transforms-3\49e57750e0ee594e88952d01f55d90a8\transformed\jetified-datastore-preferences-release\res
+com.example.calculator.app-coordinatorlayout-1.0.0-12 C:\Users\kenwo\.gradle\caches\transforms-3\4b2bb6d4a51d536b68d4d2170f099312\transformed\coordinatorlayout-1.0.0\res
+com.example.calculator.app-jetified-tracing-1.2.0-13 C:\Users\kenwo\.gradle\caches\transforms-3\55532c16caa0ce641cd06c4240ccb3fb\transformed\jetified-tracing-1.2.0\res
+com.example.calculator.app-jetified-core-ktx-1.13.1-14 C:\Users\kenwo\.gradle\caches\transforms-3\5733c2684db82202f13bf79aa3d943c4\transformed\jetified-core-ktx-1.13.1\res
+com.example.calculator.app-jetified-lifecycle-viewmodel-savedstate-2.7.0-15 C:\Users\kenwo\.gradle\caches\transforms-3\6657ca71e9ef2fe95c78146d032ffd03\transformed\jetified-lifecycle-viewmodel-savedstate-2.7.0\res
+com.example.calculator.app-fragment-1.7.1-16 C:\Users\kenwo\.gradle\caches\transforms-3\6d10e3432c273af51cc6299196c66e1a\transformed\fragment-1.7.1\res
+com.example.calculator.app-jetified-datastore-core-release-17 C:\Users\kenwo\.gradle\caches\transforms-3\8781266b177a1c775aa034ab68b3b328\transformed\jetified-datastore-core-release\res
+com.example.calculator.app-slidingpanelayout-1.2.0-18 C:\Users\kenwo\.gradle\caches\transforms-3\87af36a56321a4b98fb7f86449860b3c\transformed\slidingpanelayout-1.2.0\res
+com.example.calculator.app-jetified-fragment-ktx-1.7.1-19 C:\Users\kenwo\.gradle\caches\transforms-3\883f93a76dafa753285416436d1cbad4\transformed\jetified-fragment-ktx-1.7.1\res
+com.example.calculator.app-jetified-profileinstaller-1.3.1-20 C:\Users\kenwo\.gradle\caches\transforms-3\93396dc11e0e4f737bb9eac45a337939\transformed\jetified-profileinstaller-1.3.1\res
+com.example.calculator.app-jetified-lifecycle-livedata-core-ktx-2.7.0-21 C:\Users\kenwo\.gradle\caches\transforms-3\986bb731a0fbe5d488711e18e9992b6c\transformed\jetified-lifecycle-livedata-core-ktx-2.7.0\res
+com.example.calculator.app-jetified-savedstate-ktx-1.2.1-22 C:\Users\kenwo\.gradle\caches\transforms-3\9ff3ec941af756e063fb80c82222f75c\transformed\jetified-savedstate-ktx-1.2.1\res
+com.example.calculator.app-jetified-window-1.2.0-23 C:\Users\kenwo\.gradle\caches\transforms-3\a713f1ff179e956aec0afe83e9a0d34d\transformed\jetified-window-1.2.0\res
+com.example.calculator.app-lifecycle-runtime-2.7.0-24 C:\Users\kenwo\.gradle\caches\transforms-3\bc938131480bc86dddab9bc22291446d\transformed\lifecycle-runtime-2.7.0\res
+com.example.calculator.app-jetified-core-1.0.0-25 C:\Users\kenwo\.gradle\caches\transforms-3\be0786fbc31ecf23b91557ce06b48a02\transformed\jetified-core-1.0.0\res
+com.example.calculator.app-preference-1.2.1-26 C:\Users\kenwo\.gradle\caches\transforms-3\c57c4ae9d77f0c88d6f37567bf06d388\transformed\preference-1.2.1\res
+com.example.calculator.app-jetified-activity-1.8.1-27 C:\Users\kenwo\.gradle\caches\transforms-3\cd49aacd68a4cffa5580422c86effa36\transformed\jetified-activity-1.8.1\res
+com.example.calculator.app-lifecycle-livedata-core-2.7.0-28 C:\Users\kenwo\.gradle\caches\transforms-3\dbd2334b391bd91c36f702ac2daa667d\transformed\lifecycle-livedata-core-2.7.0\res
+com.example.calculator.app-core-runtime-2.2.0-29 C:\Users\kenwo\.gradle\caches\transforms-3\e0faae78d24bf4a3552896344b66573e\transformed\core-runtime-2.2.0\res
+com.example.calculator.app-jetified-datastore-release-30 C:\Users\kenwo\.gradle\caches\transforms-3\e116a9c4dc7f1ca364215f215e7e510a\transformed\jetified-datastore-release\res
+com.example.calculator.app-appcompat-1.1.0-31 C:\Users\kenwo\.gradle\caches\transforms-3\e995dd86c75a93e2c278e87c130669aa\transformed\appcompat-1.1.0\res
+com.example.calculator.app-jetified-savedstate-1.2.1-32 C:\Users\kenwo\.gradle\caches\transforms-3\ef86a3d140105bfdf8d2b5752a662a45\transformed\jetified-savedstate-1.2.1\res
+com.example.calculator.app-transition-1.4.1-33 C:\Users\kenwo\.gradle\caches\transforms-3\f46d8f2c8a937e09321d9455764600b0\transformed\transition-1.4.1\res
+com.example.calculator.app-jetified-lifecycle-runtime-ktx-2.7.0-34 C:\Users\kenwo\.gradle\caches\transforms-3\fb61360fd9f36076ae739619d18f66b5\transformed\jetified-lifecycle-runtime-ktx-2.7.0\res
+com.example.calculator.app-debug-35 D:\Projects\Flutter Projects\Digit-Dynamo\android\app\src\debug\res
+com.example.calculator.app-main-36 D:\Projects\Flutter Projects\Digit-Dynamo\android\app\src\main\res
+com.example.calculator.app-pngs-37 D:\Projects\Flutter Projects\Digit-Dynamo\build\app\generated\res\pngs\debug
+com.example.calculator.app-resValues-38 D:\Projects\Flutter Projects\Digit-Dynamo\build\app\generated\res\resValues\debug
+com.example.calculator.app-rs-39 D:\Projects\Flutter Projects\Digit-Dynamo\build\app\generated\res\rs\debug
+com.example.calculator.app-mergeDebugResources-40 D:\Projects\Flutter Projects\Digit-Dynamo\build\app\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.example.calculator.app-mergeDebugResources-41 D:\Projects\Flutter Projects\Digit-Dynamo\build\app\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.example.calculator.app-merged_res-42 D:\Projects\Flutter Projects\Digit-Dynamo\build\app\intermediates\merged_res\debug
+com.example.calculator.app-packaged_res-43 D:\Projects\Flutter Projects\Digit-Dynamo\build\shared_preferences_android\intermediates\packaged_res\debug
